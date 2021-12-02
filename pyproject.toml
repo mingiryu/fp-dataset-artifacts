@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "fp-dataset-artifacts"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+numpy = "1.21.2"
+openai = "^0.11.0"
+datasets = "^1.15.1"
+
+[tool.poetry.dev-dependencies]
+black = "^21.11b1"
+jupyterlab = "^3.2.4"
+python-dotenv = "^0.19.2"
+ipywidgets = "^7.6.5"
+ipython = "^7.29.0"
+
+[tool.black]
+line-length = 79
+skip-string-normalization = true
+target-version = ['py39']
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
