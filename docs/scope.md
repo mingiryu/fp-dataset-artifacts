@@ -130,3 +130,6 @@ There are three strategies for evaluating w-ETT accuracy, knowledge transfer, lo
 
 We might have to start using classification or fine tuning to get actual results.
 
+Using `Classification` worked, but the performance was quite bad. Fine-tuning seems to be working very nicely.
+
+
