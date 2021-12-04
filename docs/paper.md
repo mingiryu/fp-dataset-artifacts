@@ -43,9 +43,10 @@ Here we show the available benchmarks for each datasets from PaperWithCode.com
 | FLAN 137B zero-shot    |                       |                   |          | 82.9  |
 | GPT-3 175B (Few-Shot)  |                       |                   |          | 76.4  |
 
-The obvious issue here is that there aren't any available benchmarks for GPT-3 that can be reliably compared with other transformer models.
+The obvious issue here is that there aren't any available benchmarks for GPT-3 that can be reliably compared with other transformer models. As a result, we need to come up with our own baseline in order to evaluate how dataset artifacts affect GPT-3.
 
-As a result, we need to come up with out own baseline.
+> Note: Since _HotpotQA_ doesn't have any benchmark results for any of those models, we won't be considering it going forward. However, preliminary work demonstrates GPT-3 potential in multi-hop question answering.
+
 
 ### Datasets
 
@@ -61,9 +62,9 @@ At the time of this writing, OpenAI offers 4 different tier of models (or Engine
 
 GPT-3 delivers practically no results on zero-shot learning.
 
-For a perfectly valid prompt such as the following, the model fails or refuses to generate a valid text.
+For a perfectly valid prompt such as the following, the model fails (or refuses) to generate a valid text.
 
-**SQuAD Completion Samples**
+**SQuAD Samples**
 
 Hyperparameters:
 
@@ -162,11 +163,11 @@ Generated text:
 
 ```
 
-These examples demonstrate that GPT-3 models cannot perform zero-shot learning on SQuAD dataset. Same is true for other datasets such as _BoolQ_ dataset.
+These samples demonstrate that GPT-3 models cannot perform zero-shot learning on SQuAD dataset. Same is true for other datasets such as _BoolQ_ dataset.
 
-**BoolQ Examples**
+**BoolQ Samples**
 
-Hyperparameters: Same as _SQuAD_ examples.
+Hyperparameters: Same as _SQuAD_ samples.
 
 Prompt 1:
 
@@ -245,7 +246,7 @@ Since zero-shot GPT-3 is non-functional, we can assume that the performance is n
 
 On the other hand, GPT-3 can be quite good at few-shot learning and can perform well even without the context. However, due to the nature of text generation, exact match (EM) performance is quite bad and it makes it challenging to evaluate the performance accurately.
 
-**SQuAD 2.0 Completion Samples**
+**SQuAD 2.0 Samples**
 
 Hyperparameters:
 ```py
@@ -421,6 +422,15 @@ These samples illustrate a few characteristics of GPT-3.
 - Not all structure is useful. Adding or removing `Context:` doesn't seem to affect the result.
 - Getting the model to generate an exact match text seems tricky.
 
+**BoolQ**
+
+On the other hand, few-shot GPT-3 fails to generate any text on _BoolQ_ dataset even with as many example as 5 and with the complete passages.
+
+Similar to zero-shot SQuAD, GPT-3 generates empty strings even for fairly sophisticated prompts. However, removing the `stop=['\n']` hyperparameter constraint does alleviate the empty string issue, but the generated text is a continuation of the examples with _hallucinated_ passage and question about the previous question and answer.
+
+In essence, GPT-3 fails to generate a simple text "Yes" or "No" even with the provided examples to learn from on the spot.
+
+> Note: The _BoolQ_ samples aren't included in this section for the sake of brevity.
 
 ### Natural Language Inference
 
