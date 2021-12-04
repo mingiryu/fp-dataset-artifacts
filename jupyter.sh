@@ -1,2 +1,1 @@
-poetry shell
-jupyter notebook notebooks
+poetry run jupyter notebook notebooks
