@@ -47,7 +47,6 @@ The obvious issue here is that there aren't any available benchmarks for GPT-3 t
 
 > Note: Since _HotpotQA_ doesn't have any benchmark results for any of those models, we won't be considering it going forward. However, preliminary work demonstrates GPT-3 potential in multi-hop question answering.
 
-
 ### Datasets
 
 All datasets are sourced via HuggingFace Datasets library.
@@ -238,9 +237,10 @@ Generated text:
 ```
 
 ```
+
 While these are only a handful of examples, but it demonstrate one of the most notable weaknesses of GPT-3 zero-shot learning: failing to generate text. This is quite ironic since GPT-3 is a celebrated as generative model, but it cannot produce a valid text even without the `stop='\n'` parameter.
 
-Since zero-shot GPT-3 is non-functional, we can assume that the performance is near zero. 
+Since zero-shot GPT-3 is non-functional, we can assume that the performance is near zero.
 
 #### Few-shot Learning
 
@@ -249,6 +249,7 @@ On the other hand, GPT-3 can be quite good at few-shot learning and can perform 
 **SQuAD 2.0 Samples**
 
 Hyperparameters:
+
 ```py
 engine='ada',
 prompt=prompt,
@@ -263,6 +264,7 @@ stop=['\n']
 We use _Ada_ model here because we found that this model was good enough for few-shot learning.
 
 Prompt 1 w/ a single example:
+
 ```
 I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
 
@@ -274,16 +276,19 @@ A:
 ```
 
 Generated text:
+
 ```
 1980s
 ```
 
 Expected text:
+
 ```
 late 1990s
 ```
 
 Prompt 2 w/ a few examples:
+
 ```
 I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
 
@@ -298,16 +303,19 @@ A:
 ```
 
 Generated text:
+
 ```
 1980s
 ```
 
 Expected text:
+
 ```
 late 1990s
 ```
 
 Prompt 3 w/ a very similar question as an example:
+
 ```
 I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
 
@@ -328,16 +336,19 @@ A:
 ```
 
 Generated text:
+
 ```
 the late 1990s
 ```
 
 Expected text:
+
 ```
 late 1990s
 ```
 
 Prompt 4 w/o the problematic question:
+
 ```
 I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
 
@@ -351,20 +362,23 @@ Q: In what city and state did Beyonce  grow up?
 A: Houston, Texas
 
 Q: In which decade did Beyonce become famous?
-A: 
+A:
 ```
 
 Generated text:
+
 ```
 1980s
 ```
 
 Expected text:
+
 ```
 late 1990s
 ```
 
 Prompt 5 w/ context & w/o the problematic question:
+
 ```
 I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
 
@@ -380,20 +394,23 @@ Q: In what city and state did Beyonce  grow up?
 A: Houston, Texas
 
 Q: In which decade did Beyonce become famous?
-A: 
+A:
 ```
 
 Generated text:
+
 ```
 1990s
 ```
 
 Expected text:
+
 ```
 late 1990s
 ```
 
 Prompt 5 w/ context, w/ a single example, and w/o the problematic question:
+
 ```
 I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
 
@@ -403,24 +420,27 @@ Q: What areas did Beyonce compete in when she was growing up?
 A: singing and dancing
 
 Q: In which decade did Beyonce become famous?
-A: 
+A:
 ```
 
 Generated text:
+
 ```
 1990s
 ```
 
 Expected text:
+
 ```
 late 1990s
 ```
 
 These samples illustrate a few characteristics of GPT-3.
-- Context does matter, but the model can make a decent guess without it.
-- The model will _cheat_ from the examples if it can.
-- Not all structure is useful. Adding or removing `Context:` doesn't seem to affect the result.
-- Getting the model to generate an exact match text seems tricky.
+
+-   Context does matter, but the model can make a decent guess without it.
+-   The model will _cheat_ from the examples if it can.
+-   Not all structure is useful. Adding or removing `Context:` doesn't seem to affect the result.
+-   Getting the model to generate an exact match text seems tricky.
 
 **BoolQ**
 
@@ -433,6 +453,41 @@ In essence, GPT-3 fails to generate a simple text "Yes" or "No" even with the pr
 > Note: The _BoolQ_ samples aren't included in this section for the sake of brevity.
 
 ### Natural Language Inference
+
+In this section, we investigate another well known NLP task - _Natural Language Inference_. We are curious why the GPT-3 wasn't able to perform few-shot learning on the _BoolQ_ dataset even though it only had a two possible text to generate. Furthermore, it seems quite challenging to evaluate the exact match score for SQuAD dataset by hand. We think that these classification tasks are first step in the establishing a baseline performance for GPT-3.
+
+For NLI, we'll only consider the _SNLI_, _ANLI_, and _CommitmentBank_ datasets.
+
+For the sake of brevity, we won't be doing complete evaluations on all three datasets. We may come back to this task with more experiments if we find any issues with this particular task.
+
+### State of the Art and Baseline Performance
+
+Here we show the available benchmarks for each datasets from PaperWithCode.com
+
+| Model                 | SNLI | CommitmentBank (F1 Accuracy) | ANLI test (A1 A2 A3) |
+| --------------------- | ---- | ---------------------------- | -------------------- |
+| T5-11B                |      | 93.9 96.8                    |                      |
+| DeBerta-1.5B          |      | 94.9 97.2                    |                      |
+| RoBERTa (Large)       |      |                              | 72.4 49.8 44.4       |
+| XLNet (Large)         |      |                              | 70.3 50.9 49.4       |
+| GPT-3 175B (Few-Shot) |      | 52 75.6                      |                      |
+| GPT-3                 |      |                              | 36.8 34 40.2         |
+
+Same as Question and Answering task, there isn't a straight-forward way of estimating relative performance of GPT-3 compared to other models. In this case, _SNLI_ dataset doesn't even have any metrics available for the models that can be measured against GPT-3 in another dataset.
+
+Regardless, we are still interested in GPT-3 performance on _SNLI_ and the other aforementioned datasets. We'll try to see if we can build a reasonable baseline for the use in dataset artifacts analysis.
+
+### Datasets
+
+Same as Q&A section. All datasets are sourced via HuggingFace Datasets library.
+
+### Implementation
+
+Same as Q&A section. We'll use the _Curie_ model to evaluate the general performance of OpenAI's GPT-3 offerings.
+
+### Results
+
+#### Zero-shot Learning
 
 ### State of the Art and Baseline Performance
 
