@@ -63,19 +63,19 @@ GPT-3 delivers practically no results on zero-shot learning.
 
 For a perfectly valid prompt such as the following, the model fails or refuses to generate a valid text.
 
-**SQuAD Examples**
+**SQuAD Completion Samples**
 
 Hyperparameters:
 
-```
-  engine='curie',
-  prompt=prompt,
-  temperature=0,
-  max_tokens=100,
-  top_p=1,
-  frequency_penalty=0.0,
-  presence_penalty=0.0,
-  stop=["\n"]
+```py
+engine='curie',
+prompt=prompt,
+temperature=0,
+max_tokens=100,
+top_p=1,
+frequency_penalty=0.0,
+presence_penalty=0.0,
+stop=['\n']
 ```
 
 Prompt 1:
@@ -238,6 +238,188 @@ Generated text:
 
 ```
 While these are only a handful of examples, but it demonstrate one of the most notable weaknesses of GPT-3 zero-shot learning: failing to generate text. This is quite ironic since GPT-3 is a celebrated as generative model, but it cannot produce a valid text even without the `stop='\n'` parameter.
+
+Since zero-shot GPT-3 is non-functional, we can assume that the performance is near zero. 
+
+#### Few-shot Learning
+
+On the other hand, GPT-3 can be quite good at few-shot learning and can perform well even without the context. However, due to the nature of text generation, exact match (EM) performance is quite bad and it makes it challenging to evaluate the performance accurately.
+
+**SQuAD 2.0 Completion Samples**
+
+Hyperparameters:
+```py
+engine='ada',
+prompt=prompt,
+temperature=0,
+max_tokens=100,
+top_p=1,
+frequency_penalty=0.0,
+presence_penalty=0.0,
+stop=['\n']
+```
+
+We use _Ada_ model here because we found that this model was good enough for few-shot learning.
+
+Prompt 1 w/ a single example:
+```
+I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
+
+Q: What areas did Beyonce compete in when she was growing up?
+A: singing and dancing
+
+Q: In which decade did Beyonce become famous?
+A:
+```
+
+Generated text:
+```
+1980s
+```
+
+Expected text:
+```
+late 1990s
+```
+
+Prompt 2 w/ a few examples:
+```
+I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
+
+Q: What areas did Beyonce compete in when she was growing up?
+A: singing and dancing
+
+Q: In what city and state did Beyonce  grow up?
+A: Houston, Texas
+
+Q: In which decade did Beyonce become famous?
+A:
+```
+
+Generated text:
+```
+1980s
+```
+
+Expected text:
+```
+late 1990s
+```
+
+Prompt 3 w/ a very similar question as an example:
+```
+I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
+
+Q: When did Beyonce start becoming popular?
+A: in the late 1990s
+
+Q: What areas did Beyonce compete in when she was growing up?
+A: singing and dancing
+
+Q: When did Beyonce leave Destiny's Child and become a solo singer?
+A: 2003
+
+Q: In what city and state did Beyonce  grow up?
+A: Houston, Texas
+
+Q: In which decade did Beyonce become famous?
+A:
+```
+
+Generated text:
+```
+the late 1990s
+```
+
+Expected text:
+```
+late 1990s
+```
+
+Prompt 4 w/o the problematic question:
+```
+I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
+
+Q: What areas did Beyonce compete in when she was growing up?
+A: singing and dancing
+
+Q: When did Beyonce leave Destiny's Child and become a solo singer?
+A: 2003
+
+Q: In what city and state did Beyonce  grow up?
+A: Houston, Texas
+
+Q: In which decade did Beyonce become famous?
+A: 
+```
+
+Generated text:
+```
+1980s
+```
+
+Expected text:
+```
+late 1990s
+```
+
+Prompt 5 w/ context & w/o the problematic question:
+```
+I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
+
+Context: Beyoncé Giselle Knowles-Carter (/biːˈjɒnseɪ/ bee-YON-say) (born September 4, 1981) is an American singer, songwriter, record producer and actress. Born and raised in Houston, Texas, she performed in various singing and dancing competitions as a child, and rose to fame in the late 1990s as lead singer of R&B girl-group Destiny's Child. Managed by her father, Mathew Knowles, the group became one of the world's best-selling girl groups of all time. Their hiatus saw the release of Beyoncé's debut album, Dangerously in Love (2003), which established her as a solo artist worldwide, earned five Grammy Awards and featured the Billboard Hot 100 number-one singles "Crazy in Love" and "Baby Boy".
+
+Q: What areas did Beyonce compete in when she was growing up?
+A: singing and dancing
+
+Q: When did Beyonce leave Destiny's Child and become a solo singer?
+A: 2003
+
+Q: In what city and state did Beyonce  grow up?
+A: Houston, Texas
+
+Q: In which decade did Beyonce become famous?
+A: 
+```
+
+Generated text:
+```
+1990s
+```
+
+Expected text:
+```
+late 1990s
+```
+
+Prompt 5 w/ context, w/ a single example, and w/o the problematic question:
+```
+I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with "Unknown".
+
+Beyoncé Giselle Knowles-Carter (/biːˈjɒnseɪ/ bee-YON-say) (born September 4, 1981) is an American singer, songwriter, record producer and actress. Born and raised in Houston, Texas, she performed in various singing and dancing competitions as a child, and rose to fame in the late 1990s as lead singer of R&B girl-group Destiny's Child. Managed by her father, Mathew Knowles, the group became one of the world's best-selling girl groups of all time. Their hiatus saw the release of Beyoncé's debut album, Dangerously in Love (2003), which established her as a solo artist worldwide, earned five Grammy Awards and featured the Billboard Hot 100 number-one singles "Crazy in Love" and "Baby Boy".
+
+Q: What areas did Beyonce compete in when she was growing up?
+A: singing and dancing
+
+Q: In which decade did Beyonce become famous?
+A: 
+```
+
+Generated text:
+```
+1990s
+```
+
+Expected text:
+```
+late 1990s
+```
+
+These samples illustrate a few characteristics of GPT-3.
+- Context does matter, but the model can make a decent guess without it.
+- The model will _cheat_ from the examples if it can.
+- Not all structure is useful. Adding or removing `Context:` doesn't seem to affect the result.
+- Getting the model to generate an exact match text seems tricky.
 
 
 ### Natural Language Inference
