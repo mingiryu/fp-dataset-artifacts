@@ -38,3 +38,14 @@ def get_fewshot_prompt(x, exs, intro=LONG_INTRO, passage=True, sep='###'):
     ]
     target = get_zeroshot_prompt(x, intro=sep, passage=passage)
     return '\n\n'.join([intro, *examples, target])
+
+
+def map_finetune_train(x):
+    question = format_question(x['question'])
+    passage = x['passage']
+    answer = format_answer(x['answer'])
+
+    return {
+        'prompt': f"{passage}\n\nQ: {question}\n\nA: ",
+        'completion': answer,
+    }
