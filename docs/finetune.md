@@ -31,3 +31,19 @@ compute_classification_metrics=True,
 classification_positive_class='Yes',
 classification_n_classes=2
 ```
+
+## ANLI
+
+id: ft-uYZ4vdMlvmoLVuycheBpvM7U
+
+> Note: All rounds (1,2,3) training data is too big. This is only for round 1.
+
+params:
+```py
+training_file='file-FkO4WnaoNWQjODh96npgZ6Kr',
+validation_file='file-cZYCbTSEyYvGpQ1lW2kB41pg',
+model='curie',
+n_epochs=4,
+compute_classification_metrics=True,
+classification_n_classes=3
+```

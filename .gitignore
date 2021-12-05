@@ -13,3 +13,6 @@ notebooks/snli_finetune_validation.jsonl
 notebooks/snli_finetune_train.jsonl
 notebooks/boolq_finetune_train.jsonl
 notebooks/boolq_finetune_valid.jsonl
+notebooks/anli_finetune_train.jsonl
+notebooks/anli_finetune_train_r1.jsonl
+notebooks/anli_finetune_dev_r1.jsonl
