@@ -49,3 +49,10 @@ def map_finetune_train(x):
         'prompt': f"{passage}\n\nQ: {question}\n\nA: ",
         'completion': answer,
     }
+
+
+def get_finetune_prompt(x):
+    question = format_question(x['question'])
+    passage = x['passage']
+
+    return f"{passage}\n\nQ: {question}\n\nA: "
