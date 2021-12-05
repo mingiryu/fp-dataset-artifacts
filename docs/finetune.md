@@ -2,6 +2,8 @@
 
 id: ft-liaJqXchRH2a0b7InmAZuvEG
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-02-03-14-04
+results: file-fODaqo7g6sIEmjKDynpQUfJq
+- F1: 0.901942
 
 > Note: Only 10% of the training dataset was used due to the token limit.
 
@@ -15,11 +17,14 @@ compute_classification_metrics=True,
 classification_n_classes=3
 ```
 
+> Note: Trained on labels without `\n` ending token.
 
 ## BoolQ
 
 id: ft-9ZmeSNYkAUhZEmXkoiigSMdJ
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-05-02-38-38
+results: file-7mMJchteVwqmaih6gj199hXk
+- F1: 0.889259
 
 params:
 ```py
@@ -32,9 +37,14 @@ classification_positive_class='Yes',
 classification_n_classes=2
 ```
 
+> Note: Trained on labels without `\n` ending token.
+
 ## ANLI
 
 id: ft-uYZ4vdMlvmoLVuycheBpvM7U
+model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-05-03-26-14
+results: file-8d5IsoqvC86h9bihVABgKQSP
+- F1: 0.550766
 
 > Note: All rounds (1,2,3) training data is too big. This is only for round 1.
 
