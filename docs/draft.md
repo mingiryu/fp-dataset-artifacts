@@ -473,7 +473,7 @@ Here we show the available benchmarks for each datasets from PaperWithCode.com
 | GPT-3 175B (Few-Shot) |      | 52 75.6                      |                      |
 | GPT-3                 |      |                              | 36.8 34 40.2         |
 
-Same as Question and Answering task, there isn't a straight-forward way of estimating relative performance of GPT-3 compared to other models. In this case, _SNLI_ dataset doesn't even have any metrics available for the models that can be measured against GPT-3 in another dataset.
+Same as the Question and Answering task, there isn't a straight-forward way of estimating relative performance of GPT-3 compared to other models. In this case, _SNLI_ dataset doesn't even have any metrics available for the models that can be measured against GPT-3 in another dataset.
 
 Regardless, we are still interested in GPT-3 performance on _SNLI_ and the other aforementioned datasets. We'll try to see if we can build a reasonable baseline for the use in dataset artifacts analysis.
 

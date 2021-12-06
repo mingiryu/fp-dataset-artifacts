@@ -39,7 +39,7 @@ classification_n_classes=2
 
 > Note: Trained on labels without `\n` ending token.
 
-## ANLI
+## ANLI (Round 1)
 
 id: ft-uYZ4vdMlvmoLVuycheBpvM7U
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-05-03-26-14
