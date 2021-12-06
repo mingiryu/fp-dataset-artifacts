@@ -517,15 +517,17 @@ With _SNLI_, we fine-tuned on 10% of the training dataset due to the token limit
 
 With _ANLI_, we fine-tuned only on the round 1 dataset due to the token limit. The reported validation F1 score was `55.0766` and test test F1 score was `56.398`, which is considerably higher than published GPT-3 (few-shot) round 1 F1 score of `36.8`.
 
-## Adversarial Attacks and Challenges Datasets
+## Adversarial Attacks and Datasets
 
-### CheckList
+### Adversarial Datasets
 
-### Contrastive and Counterfactuals
+### TextAttack
 
-## Prompt Engineering
+## Discussion
 
-### Few-shot Learning
+### Prompt Engineering
+
+#### Few-shot Learning
 
 For Q&A, the prompt engineering had a notable impact on the text generation results. We found that more examples doesn't necessity help and it introduces the possibility of the model cheating based on the examples.
 
@@ -533,15 +535,24 @@ While introductions and the prompt structure do help, but it's not obvious why c
 
 For NLI, any degree of prompt engineering didn't seem to help the model to make the correct text generation. We first thought that the label text we were asking the model was not "natural" enough, so we tried changing the examples to have complete sentences. Then, we tried rephrasing the task as Q&A since that prompt was working properly. Without much luck, that approach was also unsuccessful. We also adapted OpenAI's tweet sentiment classifier example to NLI to see if it was a problem of some obscure structure. However, that didn't work as well.
 
-Some could argue that NLI task is simply too difficult for the model to learn on the spot, but it seems quite problematic that the model _cannot_ any relevant text regardless of the correctness. We suspect that this an issue with OpenAI's undisclosed post-processing rather than an issue with the model itself.
+Some could argue that NLI task is simply too difficult for the model to learn on the spot, but it seems quite problematic that the model _cannot_ any relevant text regardless of the correctness.
 
-### Fine-tuning
+However, a further ablation study of Q&A suggests that difficulty of the task is not the issue. If the prompt includes examples that are unrelated, then the model will fail to generate a valid text as well.
+
+In conclusion, GPT-3 seems unable to learn to generate a valid label when there's too much and too broad of information in the prompt. It seems to end up focusing on the example generation rather label generation.
+
+#### Fine-tuning
 
 In fine tuning, certain prompt aspects such as introduction and examples aren't necessary. However, basic prompt structure remain crucial in making the model perform.
 
 Furthermore, adding in an end token such as a newline ("\n") or triple hashtags ("###") is necessary for the text generation to stop after the label is generated. 
 
-## Discussion
-
-
 ## Future Works
+
+**Fine-tune on the entire SNLI training dataset**
+- Due to the token limitation, we were only able to train on roughly 10% of the training dataset for SNLI. Even with the restriction removed, it will cost significant amount of time and money to fine-tune the model. So, it needs to be carried out with a direct support from OpenAI.
+
+**Investigate the issue in few-shot learning**
+- It's quite mysterious as to why GPT-3 fails to generate valid text in certain instances. This requires us evaluating GPT-3 model against larger selection of tasks to identify the characteristics of the dataset and task that makes it challenging for the model.
+
+## Conclusion
