@@ -477,6 +477,8 @@ Same as the Question and Answering task, there isn't a straight-forward way of e
 
 Regardless, we are still interested in GPT-3 performance on _SNLI_ and the other aforementioned datasets. We'll try to see if we can build a reasonable baseline for the use in dataset artifacts analysis.
 
+> Note: _CommitmentBank_ dataset is not available via Huggingface's Datasets. 
+
 ### Datasets
 
 Same as Q&A section. All datasets are sourced via HuggingFace Datasets library.

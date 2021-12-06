@@ -18,6 +18,20 @@ def get_qa_response(prompt, engine='curie'):
         top_p=1,
         frequency_penalty=0.0,
         presence_penalty=0.0,
-        stop=["\n"],
+        stop=['\n'],
+    )
+    return response
+
+
+def get_clf_response(prompt, engine='curie'):
+    response = openai.Completion.create(
+        engine=engine,
+        prompt=prompt,
+        temperature=0.3,
+        max_tokens=60,
+        top_p=1,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+        stop=['###'],
     )
     return response
