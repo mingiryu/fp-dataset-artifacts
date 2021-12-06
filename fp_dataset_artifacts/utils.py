@@ -35,3 +35,17 @@ def get_clf_response(prompt, engine='curie'):
         stop=['###'],
     )
     return response
+
+
+def get_finetune_response(prompt, model):
+    response = openai.Completion.create(
+        model=model,
+        prompt=prompt,
+        temperature=0.3,
+        max_tokens=10,
+        stop=['\n'],
+        top_p=1,
+        frequency_penalty=0.5,
+        presence_penalty=0,
+    )
+    return response
