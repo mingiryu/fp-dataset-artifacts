@@ -120,7 +120,9 @@ def finetune(
 
 
 def evaluate(
-    finetune_id, responses_local_filename='../results/snli_responses.jsonl'
+    finetune_id,
+    n_samples=1000,
+    responses_local_filename='../results/snli_responses.jsonl',
 ):
     # Initialize OpenAI API with API_KEY
     init_openai()
@@ -141,7 +143,14 @@ def evaluate(
 
     # Download the SNLI dataset
     data = load_dataset('snli')
-    test = data['test'].map(map_finetune)
+
+    # Evaluating on the entire test set is too costly.
+    test = (
+        data['test']
+        .shuffle(0)
+        .select(list(range(n_samples)))
+        .map(map_finetune)
+    )
     test = test = test.remove_columns(['premise', 'hypothesis', 'label'])
 
     # Evaluate the model on test set
