@@ -1,4 +1,4 @@
-# Evaluating the Robustness and Fairness of Commercially Available GPT-3 Models
+# Analyzing and Mitigating Dataset Artifacts in OpenAI's Commercially Available GPT-3 Models
 
 ## Abstract
 
