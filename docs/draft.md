@@ -515,9 +515,7 @@ With _BoolQ_, we fine-tuned on the entire training dataset and the reported vali
 
 With _SNLI_, we fine-tuned on 10% of the training dataset due to the token limit imposed by OpenAI. The reported validation F1 score was `90.1942`.
 
-With _ANLI_, we fine-tuned only on the round 1 dataset due to the token limit. The reported validation F1 score was `55.0766`, which is quite higher than published GPT-3 (few-shot) round 1 F1 score of `36.8`.
-
-## Prompt Engineering
+With _ANLI_, we fine-tuned only on the round 1 dataset due to the token limit. The reported validation F1 score was `55.0766` and test test F1 score was `56.398`, which is considerably higher than published GPT-3 (few-shot) round 1 F1 score of `36.8`.
 
 ## Adversarial Attacks and Challenges Datasets
 
@@ -525,16 +523,25 @@ With _ANLI_, we fine-tuned only on the round 1 dataset due to the token limit. T
 
 ### Contrastive and Counterfactuals
 
-## Language Modeling
+## Prompt Engineering
 
-### Masked Language Modeling
+### Few-shot Learning
 
-### Next Token Language Modeling
+For Q&A, the prompt engineering had a notable impact on the text generation results. We found that more examples doesn't necessity help and it introduces the possibility of the model cheating based on the examples.
 
-## Societal Implications
+While introductions and the prompt structure do help, but it's not obvious why certain things help and not the others. While having "Q:" and "A:" was crucial in making the model work, having "Context:" did not make any notable difference in the result.
 
-### Misinformation
+For NLI, any degree of prompt engineering didn't seem to help the model to make the correct text generation. We first thought that the label text we were asking the model was not "natural" enough, so we tried changing the examples to have complete sentences. Then, we tried rephrasing the task as Q&A since that prompt was working properly. Without much luck, that approach was also unsuccessful. We also adapted OpenAI's tweet sentiment classifier example to NLI to see if it was a problem of some obscure structure. However, that didn't work as well.
 
-### Unemployment
+Some could argue that NLI task is simply too difficult for the model to learn on the spot, but it seems quite problematic that the model _cannot_ any relevant text regardless of the correctness. We suspect that this an issue with OpenAI's undisclosed post-processing rather than an issue with the model itself.
 
-### Surveillance Capitalism
+### Fine-tuning
+
+In fine tuning, certain prompt aspects such as introduction and examples aren't necessary. However, basic prompt structure remain crucial in making the model perform.
+
+Furthermore, adding in an end token such as a newline ("\n") or triple hashtags ("###") is necessary for the text generation to stop after the label is generated. 
+
+## Discussion
+
+
+## Future Works
