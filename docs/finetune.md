@@ -25,6 +25,7 @@ id: ft-9ZmeSNYkAUhZEmXkoiigSMdJ
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-05-02-38-38
 results: file-7mMJchteVwqmaih6gj199hXk
 - F1: 0.889259
+- accuracy: 0.857798
 
 params:
 ```py

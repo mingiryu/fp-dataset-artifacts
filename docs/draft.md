@@ -489,15 +489,33 @@ Same as Q&A section. We'll use the _Curie_ model to evaluate the general perform
 
 ### Results
 
-#### Zero-shot Learning
+In both _SNLI_ and _ANLI_, we were not able to make the model to generate a valid text ("Entailment", "Neutral", "Contradiction") regardless of how many examples we threw at it. Similar to _BoolQ_ dataset, we suspect that GPT-3 is not well suited for a complex classification tasks such as NLI.
 
-### State of the Art and Baseline Performance
+Despite it's oddly redundant prompt and engineered structure, the [tweet sentiment classifier example](https://beta.openai.com/examples/default-adv-tweet-classifier) from OpenAI demonstrates GPT-3 ability to perform few-shot learning on sentiment classification. However, adapting this style of prompt did not allow the GPT-3 to perform the NLI task.
+
+> Note: We won't be sharing the examples here for the sake of brevity.
 
 ## Fine-tuning
 
+On the other hand, fine-tuning GPT-3 using [OpenAI's Fine-tunes](https://beta.openai.com/docs/guides/fine-tuning) allowed the fine-tuned models to perform the tasks where the few-shot learning had failed to generate a valid text.
+
+With fine-tuning, we were able to verify the feasibility of using GPT-3 on _SNLI_, _ANLI_, and _BoolQ_ datasets. This meant that we can establish a baseline performance for each datasets.
+
+At the time of this writing, fine-tuning on OpenAI's GPT-3 models are restricted to 2.5M tokens for the training and validation datasets. As a result, we weren't able to fine-tune with the entire datasets for most of the datasets.
+
+### Implementation
+
+All fine-tuning were done with the default hyperparameters (`n_epochs=4`) and appropriate classification metrics configuration. We found that four epochs was more than enough to reach the training token accuracy of `1.0`. However, some degree of prompt engineering was required to reliably get high score on training sequence accuracy.
+
 ### Question and Answering
 
+With _BoolQ_, we fine-tuned on the entire training dataset and the reported validation accuracy was `85.7798`. Given that the published few-shot performance of GPT-3 is `76.4`, `85.7798` is a a reasonable starting point.
+
 ### Natural Language Inference
+
+With _SNLI_, we fine-tuned on 10% of the training dataset due to the token limit imposed by OpenAI. The reported validation F1 score was `90.1942`.
+
+With _ANLI_, we fine-tuned only on the round 1 dataset due to the token limit. The reported validation F1 score was `55.0766`, which is quite higher than published GPT-3 (few-shot) round 1 F1 score of `36.8`.
 
 ## Prompt Engineering
 
