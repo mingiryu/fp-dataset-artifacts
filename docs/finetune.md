@@ -47,6 +47,10 @@ model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-05-03-26-14
 results: file-8d5IsoqvC86h9bihVABgKQSP
 - F1: 0.550766
 
+eval:
+- F1: 0.56398
+- accuracy: 0.566
+
 > Note: All rounds (1,2,3) training data is too big. This is only for round 1.
 
 params:
