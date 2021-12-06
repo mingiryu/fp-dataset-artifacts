@@ -83,7 +83,7 @@ def finetune(
     # training data for fine-tuning.
     train = (
         data['train'].shuffle(0).select([i for i in range(train_sample_size)])
-    )
+    ).map(map_finetune)
     valid = data['validation'].map(map_finetune)
 
     # Save the data as JSON, so it can be uploaded to OpenAI.
@@ -98,14 +98,14 @@ def finetune(
         file=open(valid_local_filename), purpose='fine-tune'
     )
 
-    # Get filenames
-    train_remote_filename = uploaded_train_resp['filename']
-    valid_remote_filename = uploaded_valid_resp['filename']
+    # Get file ids
+    train_remote_id = uploaded_train_resp['id']
+    valid_remote_id = uploaded_valid_resp['id']
 
     # Create fine-tune
     finetune_resp = openai.FineTune.create(
-        training_file=train_remote_filename,
-        validation_file=valid_remote_filename,
+        training_file=train_remote_id,
+        validation_file=valid_remote_id,
         model=model,
         n_epochs=n_epochs,
         compute_classification_metrics=compute_classification_metrics,
