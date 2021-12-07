@@ -57,6 +57,11 @@ eval:
 -   F1: 0.56398
 -   Accuracy: 0.566
 
+eval SNLI:
+
+-   F1: 0.7000549
+-   Accuracy: 0.706
+
 > Note: All rounds (1,2,3) training data is too big. This is only for round 1.
 
 params:
@@ -76,13 +81,18 @@ id: ft-8brkU9ndEMQxJrA6PuE8CRdS
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-07-01-05-46
 results: file-yn9cN1uhKr0uOhW82V6GJbVL
 
--   Accuracy: 0.8896
 -   F1: 0.88974
+-   Accuracy: 0.8896
 
 eval:
 
--   Accuracy: 0.913
 -   F1: 0.9133002519868192
+-   Accuracy: 0.913
+
+eval ANLI:
+
+-   F1: 0.36316819821933644
+-   Accuracy: 0.362
 
 params:
 
