@@ -55,7 +55,7 @@ results: file-8d5IsoqvC86h9bihVABgKQSP
 eval:
 
 -   F1: 0.56398
--   accuracy: 0.566
+-   Accuracy: 0.566
 
 > Note: All rounds (1,2,3) training data is too big. This is only for round 1.
 
@@ -81,8 +81,8 @@ results: file-yn9cN1uhKr0uOhW82V6GJbVL
 
 eval:
 
--   F1: 0.9133002519868192
 -   Accuracy: 0.913
+-   F1: 0.9133002519868192
 
 params:
 
@@ -100,3 +100,71 @@ params:
 
 training_file: file-vEGR3mzOq5XylMgqV5zjuFv5
 validation_file: file-sCWXvJkbPPdRW4hLXGutd56
+
+## Ablation SNLI vs ANLI
+
+### SNLI
+
+id: ft-a0nNphtyncMOu5XmSLlUkvDz
+model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-07-03-02-36
+results: file-xCIoJMXr89SuZRVvTcI1yDbg
+
+-   F1: 0.888082
+-   Accuracy: 0.8877
+
+eval SNLI:
+
+-   F1: 0.8935001649479813
+-   Accuracy: 0.893
+
+eval ANLI:
+
+-   F1: 0.3350202931874234
+-   Accuracy: 0.337
+
+params:
+
+```py
+{
+    "batch_size": 1,
+    "classification_n_classes": 3,
+    "compute_classification_metrics": true,
+    "learning_rate_multiplier": 0.2,
+    "n_epochs": 4,
+    "prompt_loss_weight": 0.1,
+    "use_packing": true
+}
+```
+
+### ANLI
+
+id: ft-rDeH2hvXBGo0ZlmsxEKbvkP4
+model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-07-02-15-48
+results: file-T2uIh00Sl5pTmPkmAoCfnBwl
+
+-   F1: 0.852107
+-   Accuracy: 0.852
+
+eval SNLI:
+
+-   F1: 0.8892603877796055
+-   Accuracy: 0.889
+
+eval ANLI:
+
+-   F1: 0.5864711946043328
+-   Accuracy: 0.586
+
+params:
+
+```py
+{
+    "batch_size": 2,
+    "classification_n_classes": 3,
+    "compute_classification_metrics": true,
+    "learning_rate_multiplier": 0.2,
+    "n_epochs": 4,
+    "prompt_loss_weight": 0.1,
+    "use_packing": true
+}
+```
