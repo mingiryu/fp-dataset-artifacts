@@ -2,9 +2,11 @@
 
 ## Abstract
 
-OpenAI released the GPT-3 API to the public after long period of closed beta. From Codex to recruitment, there are many applications of NLP models that are sensitive to personal information, institutional bias, and a certain degree of reliability. We investigate the robustness and fairness of GPT-3 models in both few-shot learning and fine-tuned models to evaluate whether GPT-3 models are good enough to be used in commercial applications.
+We investigated few-shot and fine-tuned GPT-3 models using OpenAI's GPT-3 API. We experimented with question answering and natural language inference tasks and their respective datasets to figure out which dataset would be the most suitable to use for analyzing dataset artifacts in OpenAI GPT-3. Due to some mysterious challenges with few-shot learning and the black box nature of the model, we settled with NLI task. To establish a baseline, we fine-tuned the model with _SNLI_ and compared the performance in _SNLI_ and _ANLI_ test sets. 
 
 ## Introduction
+
+OpenAI released the GPT-3 API to the public after long period of closed beta. From Codex to recruitment, there are many applications of NLP models that are sensitive to personal information, institutional bias, and a certain degree of reliability. We investigate the robustness of GPT-3 models in both few-shot learning and fine-tuned models to evaluate whether GPT-3 models are good enough to be used in commercial applications.
 
 ## Few-shot Learning
 
@@ -477,7 +479,7 @@ Same as the Question and Answering task, there isn't a straight-forward way of e
 
 Regardless, we are still interested in GPT-3 performance on _SNLI_ and the other aforementioned datasets. We'll try to see if we can build a reasonable baseline for the use in dataset artifacts analysis.
 
-> Note: _CommitmentBank_ dataset is not available via Huggingface's Datasets. 
+> Note: _CommitmentBank_ dataset is not available via Huggingface's Datasets.
 
 ### Datasets
 
@@ -513,21 +515,38 @@ With _BoolQ_, we fine-tuned on the entire training dataset and the reported vali
 
 ### Natural Language Inference
 
-With _SNLI_, we fine-tuned on 10% of the training dataset due to the token limit imposed by OpenAI. The reported validation F1 score was `90.1942`.
+With _SNLI_, we fine-tuned on 10% of the training dataset due to the token limit imposed by OpenAI. The reported validation F1 score was `88.974`. The F1 and accuracy for test set was `91.33` and `91.3` respectively.
 
 With _ANLI_, we fine-tuned only on the round 1 dataset due to the token limit. The reported validation F1 score was `55.0766` and test test F1 score was `56.398`, which is considerably higher than published GPT-3 (few-shot) round 1 F1 score of `36.8`.
 
-## Adversarial Attacks and Datasets
+## Adversarial Attack and Datasets
 
 ### Adversarial Datasets
 
-### TextAttack
+In order to evaluate whether the adversarial dataset (_ANLI_) improved the performance of fine-tuned GPT-3 model, we fine-tuned two separate models on _SNLI_ and _ANLI_.
 
-## Discussion
+For _test_ model, we fine-tuned GPT-3 on both _SNLI_ and _ANLI_ (round 1). We used the entire _ANLI_ (round 1) training and a small portion (25,000) of _SNLI_ training set due to the token limit.
 
-### Prompt Engineering
+For _control_ model, we fine-tuned GPT-3 on only the _SNLI_ but with a larger training set to get the same training set size (41,946).
 
-#### Few-shot Learning
+In both model, the training data for the _SNLI_ portion were identical and were shuffled beforehand. Same hyperparameters were used and same prompt structure were used to isolate any possible external variables.
+
+**F1 score on SNLI or ANLI test set**
+
+|                       | SNLI test | ANLI test |
+| --------------------- | --------- | --------- |
+| _test_ (SNLI & ANLI)  | 88.93     | 58.65     |
+| _control_ (SNLI only) | 89.35     | 33.50     |
+
+We found that augmenting the adversarial datasets did improve the test score on the adversarial set, but did not improve the test score on the original set. However, the test score on original set only dropped by `0.42` whereas the test score on the adversarial set increased by `25.15`. This is a much better trade off considering that the _control_ model is not doing much better than the `1/3` random guesses.
+
+### CheckList and TextAttack
+
+Due to the natural of OpenAI GPT-3 being a black box, we won't able to use adversarial attack tools such as _CheckList_ and _TextAttack_.
+
+## Prompt Engineering
+
+### Few-shot Learning
 
 For Q&A, the prompt engineering had a notable impact on the text generation results. We found that more examples doesn't necessity help and it introduces the possibility of the model cheating based on the examples.
 
@@ -541,18 +560,25 @@ However, a further ablation study of Q&A suggests that difficulty of the task is
 
 In conclusion, GPT-3 seems unable to learn to generate a valid label when there's too much and too broad of information in the prompt. It seems to end up focusing on the example generation rather label generation.
 
-#### Fine-tuning
+### Fine-tuning
 
 In fine tuning, certain prompt aspects such as introduction and examples aren't necessary. However, basic prompt structure remain crucial in making the model perform.
 
-Furthermore, adding in an end token such as a newline ("\n") or triple hashtags ("###") is necessary for the text generation to stop after the label is generated. 
+Furthermore, adding in an end token such as a newline ("\n") or triple hashtags ("###") is necessary for the text generation to stop after the label is generated.
 
 ## Future Works
 
 **Fine-tune on the entire SNLI training dataset**
-- Due to the token limitation, we were only able to train on roughly 10% of the training dataset for SNLI. Even with the restriction removed, it will cost significant amount of time and money to fine-tune the model. So, it needs to be carried out with a direct support from OpenAI.
+
+-   Due to the token limitation, we were only able to train on roughly 10% of the training dataset for SNLI. Even with the restriction removed, it will cost significant amount of time and money to fine-tune the model. So, it needs to be carried out with a direct support from OpenAI.
 
 **Investigate the issue in few-shot learning**
-- It's quite mysterious as to why GPT-3 fails to generate valid text in certain instances. This requires us evaluating GPT-3 model against larger selection of tasks to identify the characteristics of the dataset and task that makes it challenging for the model.
+
+-   It's quite mysterious as to why GPT-3 fails to generate valid text in certain instances. This requires us evaluating GPT-3 model against larger selection of tasks to identify the characteristics of the dataset and task that makes it challenging for the model.
+
+**Data Augmentation for Adversarial Attack**
+
+-   Despite the black box limitation, we can explore data augmentation approach with either _CheckList_ or _TextAttack_. This would allow us to test the robustness of the model without needing to have access to the model weights and gradients. Since this consist of a lot of trial & error and brute-force methods, it will require expensive amounts of usage credits.
 
 ## Conclusion
+
