@@ -51,6 +51,15 @@ def get_finetune_response(prompt, model):
     return response
 
 
+def upload(dataset, filename, purpose='fine-tune'):
+    dataset.to_json(filename)
+    response = openai.File.create(
+        file=open(filename), purpose=purpose
+    )
+    file_id = response['id']
+    return file_id
+    
+
 def save_results(file_id, filename):
     with open(f'../results/{filename}', 'wb') as f:
         f.write(openai.File.download(file_id))

@@ -1,7 +1,9 @@
 ## SNLI (old)
 
 id: ft-liaJqXchRH2a0b7InmAZuvEG
+
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-02-03-14-04
+
 results: file-fODaqo7g6sIEmjKDynpQUfJq
 
 -   F1: 0.901942
@@ -24,7 +26,9 @@ classification_n_classes=3
 ## BoolQ
 
 id: ft-9ZmeSNYkAUhZEmXkoiigSMdJ
+
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-05-02-38-38
+
 results: file-7mMJchteVwqmaih6gj199hXk
 
 -   F1: 0.889259
@@ -47,7 +51,9 @@ classification_n_classes=2
 ## ANLI (Round 1)
 
 id: ft-uYZ4vdMlvmoLVuycheBpvM7U
+
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-05-03-26-14
+
 results: file-8d5IsoqvC86h9bihVABgKQSP
 
 -   F1: 0.550766
@@ -78,7 +84,9 @@ classification_n_classes=3
 ## SNLI
 
 id: ft-8brkU9ndEMQxJrA6PuE8CRdS
+
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-07-01-05-46
+
 results: file-yn9cN1uhKr0uOhW82V6GJbVL
 
 -   F1: 0.88974
@@ -109,6 +117,7 @@ params:
 ```
 
 training_file: file-vEGR3mzOq5XylMgqV5zjuFv5
+
 validation_file: file-sCWXvJkbPPdRW4hLXGutd56
 
 ## Ablation SNLI vs ANLI
@@ -116,7 +125,9 @@ validation_file: file-sCWXvJkbPPdRW4hLXGutd56
 ### SNLI
 
 id: ft-a0nNphtyncMOu5XmSLlUkvDz
+
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-07-03-02-36
+
 results: file-xCIoJMXr89SuZRVvTcI1yDbg
 
 -   F1: 0.888082
@@ -149,7 +160,9 @@ params:
 ### ANLI
 
 id: ft-rDeH2hvXBGo0ZlmsxEKbvkP4
+
 model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-07-02-15-48
+
 results: file-T2uIh00Sl5pTmPkmAoCfnBwl
 
 -   F1: 0.852107

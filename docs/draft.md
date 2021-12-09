@@ -10,7 +10,7 @@ OpenAI released the GPT-3 API to the public after long period of closed beta. Fr
 
 ## Few-shot Learning
 
-GPT-3 is well known for zero/one/few-shot learning. It can learn on the stop from none to few examples and perform surprisingly well. However, it can always behave quite unpredictably at times due to the natural of text generation. For instance, it can _hallucinate_ some information it learned during pre-training, which makes it difficult to trust whether the model is actually performing the task without bias. Also, it can sometimes decide not to follow the example at all and go on its merry way of composing examples without labels (which is what we want).
+GPT-3 is well known for zero/one/few-shot learning. It can learn on the spot from zero to few examples and perform surprisingly well. However, it can always behave quite unpredictably at times due to the natural of text generation. For instance, it can _hallucinate_ some information it learned during pre-training, which makes it difficult to trust whether the model is actually performing the task without bias. Also, it can sometimes decide not to follow the example at all and go on its merry way of composing examples without labels (which is what we want).
 
 ### Question and Answering
 
