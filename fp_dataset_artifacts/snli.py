@@ -82,7 +82,7 @@ def finetune(
     # Due to the token limitation, we can only use about 10% of the
     # training data for fine-tuning.
     train = (
-        data['train'].shuffle(0).select([i for i in range(train_sample_size)])
+        data['train'].shuffle(0).select(list(range(train_sample_size)))
     ).map(map_finetune)
     valid = data['validation'].map(map_finetune)
 

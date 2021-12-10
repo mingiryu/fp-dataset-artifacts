@@ -120,6 +120,32 @@ training_file: file-vEGR3mzOq5XylMgqV5zjuFv5
 
 validation_file: file-sCWXvJkbPPdRW4hLXGutd56
 
+## SNLI (Hypothesis only)
+
+id: ft-9JSpBBaY4vJKmx5yzibrv2am
+
+model: curie:ft-user-5hzndcnnszukksvrzrlnjn8l-2021-12-10-00-49-05
+
+results: file-wvA9xdPXmoqo8IrN7JNW144L
+
+-   F1: 0.667154
+-   Accuracy: 0.6675
+
+params:
+
+```py
+{
+    "batch_size": 2,
+    "classification_n_classes": 3,
+    "compute_classification_metrics": true,
+    "learning_rate_multiplier": 0.2,
+    "n_epochs": 4,
+    "prompt_loss_weight": 0.1,
+    "use_packing": true
+}
+```
+
+
 ## Ablation SNLI vs ANLI
 
 ### SNLI
